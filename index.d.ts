@@ -1,4 +1,8 @@
 declare module "velocitous" {
-	function start(config: { port: number; rootFolder: string }): boolean;
+	function endpoint(): void;
+	function start(config: {
+		port: number;
+		rootFolder: string;
+	}): { endpoint: endpoint };
 	export = { start: start };
 }

@@ -41,7 +41,7 @@ async function handle_file(requested_path, rewriteIndex) {
 	}
 }
 
-//info{url, path, headers, method, req, res};
+//info{url, path, headers, method, req, res, ip};
 function check_endpoints(info) {
 	for (let i = 0; i < endpoints.length; i++) {
 		if (endpoints[i].checker(info)) {
@@ -68,6 +68,7 @@ module.exports.start = function (config) {
 						path: requested_path,
 						req: req,
 						res: res,
+						ip: req.connection.remoteAddress,
 					})
 				)
 					return;
