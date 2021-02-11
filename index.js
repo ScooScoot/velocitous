@@ -52,6 +52,16 @@ function check_endpoints(info) {
 	return false;
 }
 
+const velocitousServer = {
+	endpoint: function (checker, actor) {
+		endpoints.push({
+			checker: checker,
+			actor: actor,
+		});
+		return this;
+	},
+};
+
 module.exports.start = function (config) {
 	var { port, rootFolder, rewriteIndex } = config;
 	http
@@ -94,12 +104,5 @@ module.exports.start = function (config) {
 			});
 		})
 		.listen(port);
-	return {
-		endpoint: function (checker, actor) {
-			endpoints.push({
-				checker: checker,
-				actor: actor,
-			});
-		},
-	};
+	return velocitousServer;
 };
