@@ -27,13 +27,11 @@ server.endpoint(
 ### velocitous.start(config)
 
 config:
-*`port`- The port the server should run on.
-*`rootFolder`- A relative location that contains static files to be served.
-*`rewriteIndex`- Whether the server should serve `index.html` automatically.
+_`port`- The port the server should run on.
+_`rootFolder`- A relative location that contains static files to be served. \*`rewriteIndex`- Whether the server should serve `index.html` automatically.
 
 ### velocitousServer.endpoint(checker, actor)
 
-arguments:
-*`checker` - A function which returns truthy or falsy value depending on whether the requested resource matches some condition.
-*`actor` - A function which the `IncomingMessage` and `ServerResponse` is passed to, instead of serving a static resource, if the `checker` returns a truthy value.
-
+arguments: 
+-`checker` - A function which returns truthy or falsy value depending on whether the requested resource matches some condition. 
+-`actor` - A function which the `IncomingMessage` and `ServerResponse` is passed to, instead of serving a static resource, if the `checker` returns a truthy value.
