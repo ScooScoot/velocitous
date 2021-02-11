@@ -64,6 +64,9 @@ const velocitousServer = {
 
 module.exports.start = function (config) {
 	var { port, rootFolder, rewriteIndex } = config;
+	if (rewriteIndex !== false) {
+		rewriteIndex = true;
+	}
 	http
 		.createServer(function (req, res) {
 			(async function (req, res) {

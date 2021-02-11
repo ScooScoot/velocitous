@@ -21,6 +21,7 @@ declare module "velocitous" {
 	function start(config: {
 		port: number;
 		rootFolder: string;
+		rewriteIndex: boolean = true;
 	}): velocitousServer;
 	export = { start: start };
 }
