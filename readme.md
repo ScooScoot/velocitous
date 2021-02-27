@@ -34,5 +34,5 @@ config:
 ### velocitousServer.endpoint(checker, actor)
 
 arguments:
-`checker` - A function which returns truthy or falsy value depending on whether the requested resource matches some condition.
+`checker` - A function which should return a truthy or falsy value depending on whether the requested resource matches some condition.
 `actor` - A function which the `IncomingMessage` and `ServerResponse` is passed to, instead of serving a static resource, if the `checker` returns a truthy value.
