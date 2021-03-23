@@ -1,13 +1,13 @@
 {
 	"name": "velocitous",
-	"version": "1.1.16",
+	"version": "1.1.39",
 	"description": "A static server with programmable endpoints for nodejs",
 	"main": "dist/index.js",
 	"scripts": {
 		"test": "node test/index.js",
 		"generate": "dts-generator --project ./ --out ./types.d.ts"
 	},
-	"typings": "src/typings.d.ts",
+	"typings": "types.d.ts",
 	"keywords": [],
 	"author": "Joe Capewell",
 	"license": "ISC",

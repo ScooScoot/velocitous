@@ -5,6 +5,22 @@ import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
 
+declare interface VelocitousInfo {
+	url: url.UrlWithStringQuery;
+	headers: http.IncomingHttpHeaders;
+	method: string;
+	path: string;
+	req: IncomingMessage;
+	res: ServerResponse;
+	ip: string;
+}
+
+declare interface VelocitousPassthroughInfo {
+	url: url.UrlWithStringQuery;
+	headers: http.IncomingHttpHeaders;
+	method: string;
+}
+
 const mimes: { [key: string]: string } = require("./mimes");
 
 function check_exists(path: string): Promise<string | boolean> {
@@ -22,13 +38,13 @@ function check_exists(path: string): Promise<string | boolean> {
 	});
 }
 
-function get_mime(path: any): string | false {
+function get_mime(path: string): string | false {
 	let ext = "." + path.split(".")[path.split(".").length - 1];
 	return mimes[ext];
 }
 
 async function handle_file(
-	requested_path: any,
+	requested_path: string,
 	rewriteIndex: boolean
 ): Promise<string | false> {
 	let requested_type = await check_exists(requested_path);
@@ -44,14 +60,15 @@ async function handle_file(
 	}
 }
 
-function check_endpoints(info: any, endpoints: Array<any>): boolean {
+function check_endpoints(info: VelocitousInfo, endpoints: Array<any>): boolean {
+	var rval = false;
 	for (let i = 0; i < endpoints.length; i++) {
 		if (endpoints[i].checker(info)) {
 			endpoints[i].actor(info.req, info.res);
-			return true;
+			rval = true;
 		}
 	}
-	return false;
+	return rval;
 }
 
 class VelocitousServer {
@@ -115,19 +132,41 @@ class VelocitousServer {
 		this.httpServer.listen(port);
 		return this;
 	}
-	endpoint(checker: Function, actor: Function) {
+	endpoint(
+		checker: (info: VelocitousInfo) => any,
+		actor: (req: IncomingMessage, res: ServerResponse) => any
+	): VelocitousServer {
 		this.endpoints.push({
 			checker: checker,
 			actor: actor,
 		});
 		return this;
 	}
-	passthrough(checker: Function, target: string) {
-		this.endpoint(checker, function (req, res) {
-			http.get(target, function (response) {
-				response.pipe(res);
-			});
-		});
+	passthrough(
+		checker: (info: VelocitousInfo) => any,
+		target: (info: VelocitousPassthroughInfo) => any
+	): VelocitousServer {
+		this.endpoint(
+			checker,
+			function (req: IncomingMessage, res: ServerResponse) {
+				var options = {
+					...url.parse(
+						target({
+							url: url.parse(`http://${req.headers.host}${req.url}`),
+							headers: req.headers,
+							method: req.method,
+						})
+					),
+					headers: req.headers,
+					method: req.method,
+				};
+				http.get(options, function (response) {
+					res.writeHead(response.statusCode, response.headers);
+					response.pipe(res);
+				});
+			}
+		);
+		return this;
 	}
 }
 module.exports = VelocitousServer;

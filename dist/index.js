@@ -1,4 +1,34 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,10 +66,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var http = require("http");
-var fs = require("fs");
-var path = require("path");
-var url = require("url");
+var http = __importStar(require("http"));
+var fs = __importStar(require("fs"));
+var path = __importStar(require("path"));
+var url = __importStar(require("url"));
 var mimes = require("./mimes");
 function check_exists(path) {
     return new Promise(function (resolve, reject) {
@@ -95,13 +125,14 @@ function handle_file(requested_path, rewriteIndex) {
     });
 }
 function check_endpoints(info, endpoints) {
+    var rval = false;
     for (var i = 0; i < endpoints.length; i++) {
         if (endpoints[i].checker(info)) {
             endpoints[i].actor(info.req, info.res);
-            return true;
+            rval = true;
         }
     }
-    return false;
+    return rval;
 }
 var VelocitousServer = /** @class */ (function () {
     function VelocitousServer(config) {
@@ -171,7 +202,9 @@ var VelocitousServer = /** @class */ (function () {
     };
     VelocitousServer.prototype.passthrough = function (checker, target) {
         this.endpoint(checker, function (req, res) {
-            http.get(target, function (response) {
+            var options = __assign(__assign({}, url.parse(target)), { headers: req.headers, method: req.method });
+            http.get(options, function (response) {
+                res.writeHead(response.statusCode, response.headers);
                 response.pipe(res);
             });
         });
@@ -179,3 +212,4 @@ var VelocitousServer = /** @class */ (function () {
     return VelocitousServer;
 }());
 module.exports = VelocitousServer;
+exports["default"] = VelocitousServer;
