@@ -202,12 +202,17 @@ var VelocitousServer = /** @class */ (function () {
     };
     VelocitousServer.prototype.passthrough = function (checker, target) {
         this.endpoint(checker, function (req, res) {
-            var options = __assign(__assign({}, url.parse(target)), { headers: req.headers, method: req.method });
+            var options = __assign(__assign({}, url.parse(target({
+                url: url.parse("http://" + req.headers.host + req.url),
+                headers: req.headers,
+                method: req.method
+            }))), { headers: req.headers, method: req.method });
             http.get(options, function (response) {
                 res.writeHead(response.statusCode, response.headers);
                 response.pipe(res);
             });
         });
+        return this;
     };
     return VelocitousServer;
 }());

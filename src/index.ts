@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import * as http from "http";
 import * as fs from "fs";
