@@ -1,7 +1,8 @@
 {
-	"include": ["src/*"],
+	"entryPoint": ["src/index.ts"],
+    "include": ["src/index.ts"],
 	"compilerOptions": {
 		"esModuleInterop": true,
-		"outDir": "dist"
+		"outFile": "./dist/bundle.js"
 	}
 }
