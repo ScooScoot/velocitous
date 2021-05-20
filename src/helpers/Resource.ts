@@ -1,6 +1,7 @@
 /// <reference types="node" />
 import * as fs from "fs";
 import * as path from "path";
+import Mimes from "../resources/Mimes";
 
 export default class Resource {
 	public exists: boolean;
@@ -37,5 +38,9 @@ export default class Resource {
 		if (this.exists && this.stats.isFile())
 			return fs.createReadStream(this.path);
 		throw "Resource does not exist or is not a file";
+	}
+	get mime(): null | string {
+		let extension = path.basename(this.path);
+		return Mimes[extension];
 	}
 }

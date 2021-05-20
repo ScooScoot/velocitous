@@ -7,8 +7,9 @@
     ],
 	"compilerOptions": {
 		"esModuleInterop": true,
-        "outFile": "./temp/bundle.js",
+        "outFile": "./tmp/bundle.js",
         "moduleResolution": "Node",
-        "module": "amd"
+        "module": "amd",
+        "target": "ES6"
 	}
 }

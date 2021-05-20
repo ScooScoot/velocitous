@@ -1,4 +1,4 @@
-let mimes= {
+let mimes = {
 	".123": "application/vnd.lotus-1-2-3",
 	".3dml": "text/vnd.in3d.3dml",
 	".3g2": "video/3gpp2",
@@ -823,4 +823,5 @@ let mimes= {
 	".zirz": "application/vnd.zul",
 	".zmm": "application/vnd.handheld-entertainment+xml",
 };
+
 export default mimes;
