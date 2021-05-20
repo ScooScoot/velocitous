@@ -1,10 +1,10 @@
 {
 	"name": "velocitous",
-	"version": "1.2.42",
+	"version": "1.2.43",
 	"description": "A static server with programmable endpoints for nodejs",
 	"main": "dist/velocitous.min.js",
 	"scripts": {
-		"test": "node test/index",
+		"test": "sudo node test/index",
 		"build": "./build.sh"
 	},
 	"typings": "dist/velocitous.d.ts",
