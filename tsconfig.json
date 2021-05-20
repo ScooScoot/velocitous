@@ -1,8 +1,14 @@
 {
-	"entryPoint": ["src/index.ts"],
-    "include": ["src/index.ts"],
+    "entryPoint": [
+        "src/VelocitousServer.ts"
+    ],
+    "include": [
+        "src/VelocitousServer.ts"
+    ],
 	"compilerOptions": {
 		"esModuleInterop": true,
-		"outFile": "./dist/bundle.js"
+        "outFile": "./temp/bundle.js",
+        "moduleResolution": "Node",
+        "module": "amd"
 	}
 }

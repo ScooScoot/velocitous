@@ -1,5 +1,8 @@
+rm -r dist
+mkdir dist
+mkdir temp
+npx tsc src/VelocitousServer.ts --declaration --emitDeclarationOnly --esModuleInterop --outDir temp
+npx dts-bundle --name velocitous --main temp/VelocitousServer.d.ts --out ../dist/velocitous.d.ts > /dev/null
 npx tsc-bundle tsconfig.json
-npx tsc src/index.ts --declaration --emitDeclarationOnly
-npx minify dist/bundle.js > dist/bundle.min.js
-rm dist/bundle.js
-sed -i 's/declare module "index"/declare module "velocitous"/g' dist/types.d.ts
+npx minify temp/bundle.js > dist/velocitous.min.js
+rm -r temp
