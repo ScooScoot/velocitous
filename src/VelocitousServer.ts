@@ -69,6 +69,3 @@ class VelocitousServer {
 }
 
 export default VelocitousServer;
-module.exports = {
-	default: VelocitousServer,
-};
