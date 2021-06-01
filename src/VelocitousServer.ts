@@ -7,7 +7,7 @@ import EndpointInfo from "./types/EndpointInfo";
 import VelocitousConfig from "./types/VelocitousConfig";
 import Config from "./helpers/Config";
 
-class VelocitousServer {
+export class VelocitousServer {
 	public config: Config;
 	public endpoints: Endpoint[] = [];
 	private server: http.Server;
@@ -49,11 +49,11 @@ class VelocitousServer {
 		this.config = new Config(config);
 		this.server = http.createServer(
 			(req: http.IncomingMessage, res: http.ServerResponse) => {
-				this.listener(req, res).catch((e)=>{
-                    res.writeHead(500);
-                    res.end();
-                    throw e;
-                })
+				this.listener(req, res).catch((e) => {
+					res.writeHead(500);
+					res.end();
+					throw e;
+				});
 			}
 		);
 		this.server.listen(this.config.port, this.config.bindAddress);
@@ -67,5 +67,3 @@ class VelocitousServer {
 		return this;
 	}
 }
-
-export default VelocitousServer;
