@@ -7,7 +7,7 @@ import EndpointInfo from "./types/EndpointInfo";
 import VelocitousConfig from "./types/VelocitousConfig";
 import Config from "./helpers/Config";
 
-export class VelocitousServer {
+class VelocitousServer {
 	public config: Config;
 	public endpoints: Endpoint[] = [];
 	private server: http.Server;
@@ -67,3 +67,6 @@ export class VelocitousServer {
 		return this;
 	}
 }
+
+export { VelocitousServer };
+module.exports = { VelocitousServer };
