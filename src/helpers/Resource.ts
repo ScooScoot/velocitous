@@ -40,7 +40,7 @@ export default class Resource {
 		throw "Resource does not exist or is not a file";
 	}
 	get mime(): null | string {
-		let extension = path.basename(this.path);
+		let extension = path.extname(this.path);
 		return Mimes[extension];
 	}
 }
