@@ -3,4 +3,5 @@ export default interface VelocitousConfig {
 	rootFolder: string;
 	rewriteIndex?: boolean | string;
 	bindAddress?: string;
+    headers?: { [key: string]: string };
 }

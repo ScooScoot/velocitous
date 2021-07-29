@@ -37,7 +37,10 @@ class VelocitousServer {
 
 		let headers = {
 			"content-length": resource.stats.size,
-		};
+        };
+        Object.keys(this.config.headers).forEach((key: string) => {
+            headers[key] = this.config.headers[key];
+        })
 		if (resource.mime) {
 			headers["content-type"] = resource.mime;
 		}
